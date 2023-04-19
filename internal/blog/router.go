@@ -11,12 +11,21 @@ import (
 	"blog/internal/pkg/core"
 	"blog/internal/pkg/errno"
 	"blog/internal/pkg/log"
+	"blog/pkg/auth"
+
+	mw "blog/internal/pkg/middleware"
 
 	"github.com/gin-gonic/gin"
 )
 
 // installRouters 安装 miniblog 接口路由.
 func installRouters(g *gin.Engine) error {
+
+	authz, err := auth.NewAuthz(store.S.DB())
+	if err != nil {
+		return err
+	}
+
 	// 注册 404 Handler.
 	g.NoRoute(func(c *gin.Context) {
 		core.WriteResponse(c, errno.ErrPageNotFound, nil)
@@ -29,7 +38,10 @@ func installRouters(g *gin.Engine) error {
 		core.WriteResponse(c, nil, map[string]string{"status": "ok"})
 	})
 
-	uc := user.New(store.S)
+	uc := user.New(store.S, authz)
+
+	//登录接口
+	g.POST("/login", uc.Login)
 
 	// 创建 v1 路由分组
 	v1 := g.Group("/v1")
@@ -38,6 +50,12 @@ func installRouters(g *gin.Engine) error {
 		userv1 := v1.Group("/users")
 		{
 			userv1.POST("", uc.Create)
+			userv1.PUT(":name/change-password", uc.ChangePassword)
+			userv1.Use(mw.Authn(), mw.Authz(authz))
+			userv1.GET(":name", uc.Get)
+			// userv1.PUT(":name",us.UPDATE)
+			// userv1.GET("",us.List)
+			// userv1.DELETE(":name",us.Delete)
 		}
 	}
 

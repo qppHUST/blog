@@ -5,20 +5,22 @@
 
 package model
 
-import "time"
+import (
+	"time"
+)
 
+// PostM 是数据库中 post 记录 struct 格式的映射.
 type PostM struct {
-	CreatedAt time.Time `gorm:"column:createdAt"`      //
-	Email     string    `gorm:"column:email"`          //
-	ID        int64     `gorm:"column:id;primary_key"` //
-	Nickname  string    `gorm:"column:nickname"`       //
-	Password  string    `gorm:"column:password"`       //
-	Phone     string    `gorm:"column:phone"`          //
-	UpdatedAt time.Time `gorm:"column:updatedAt"`      //
-	Username  string    `gorm:"column:username"`       //
+	ID        int64     `gorm:"column:id;primary_key"`
+	Username  string    `gorm:"column:username;not null"`
+	PostID    string    `gorm:"column:postID;not null"`
+	Title     string    `gorm:"column:title;not null"`
+	Content   string    `gorm:"column:content"`
+	CreatedAt time.Time `gorm:"column:createdAt"`
+	UpdatedAt time.Time `gorm:"column:updatedAt"`
 }
 
-// TableName sets the insert table name for this struct type
+// TableName 用来指定映射的 MySQL 表名.
 func (p *PostM) TableName() string {
-	return "user"
+	return "post"
 }
