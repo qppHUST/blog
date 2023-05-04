@@ -18,16 +18,16 @@ import (
 const (
 	// casbin 访问控制模型.
 	aclModel = `[request_definition]
-r = sub, obj, act
+								r = sub, obj, act
 
-[policy_definition]
-p = sub, obj, act
+							[policy_definition]
+								p = sub, obj, act
 
-[policy_effect]
-e = some(where (p.eft == allow))
+							[policy_effect]
+								e = some(where (p.eft == allow))
 
-[matchers]
-m = r.sub == p.sub && keyMatch(r.obj, p.obj) && regexMatch(r.act, p.act)`
+							[matchers]
+								m = r.sub == p.sub && keyMatch(r.obj, p.obj) && regexMatch(r.act, p.act)`
 )
 
 // Authz 定义了一个授权器，提供授权功能.

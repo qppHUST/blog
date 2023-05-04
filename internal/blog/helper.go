@@ -6,16 +6,24 @@
 package blog
 
 import (
+	"blog/internal/blog/controller/v1/user"
 	"blog/internal/blog/store"
 	"blog/internal/pkg/log"
 	"blog/pkg/db"
+	"errors"
 	"fmt"
+	"net"
+	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
 
+	pb "blog/pkg/proto/blog/v1"
+
+	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"google.golang.org/grpc"
 )
 
 const (
@@ -105,4 +113,64 @@ func initStore() error {
 	_ = store.NewStore(ins)
 
 	return nil
+}
+
+// startInsecureServer 创建并运行 HTTP 服务器.
+func startInsecureServer(g *gin.Engine) *http.Server {
+	// 创建 HTTP Server 实例
+	httpsrv := &http.Server{Addr: viper.GetString("addr"), Handler: g}
+
+	// 运行 HTTP 服务器。在 goroutine 中启动服务器，它不会阻止下面的正常关闭处理流程
+	// 打印一条日志，用来提示 HTTP 服务已经起来，方便排障
+	log.Infow("Start to listening the incoming requests on http address", "addr", viper.GetString("addr"))
+	go func() {
+		if err := httpsrv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
+			log.Fatalw(err.Error())
+		}
+	}()
+
+	return httpsrv
+}
+
+// startSecureServer 创建并运行 HTTPS 服务器.
+func startSecureServer(g *gin.Engine) *http.Server {
+	// 创建 HTTPS Server 实例
+	httpssrv := &http.Server{Addr: viper.GetString("tls.addr"), Handler: g}
+
+	// 运行 HTTPS 服务器。在 goroutine 中启动服务器，它不会阻止下面的正常关闭处理流程
+	// 打印一条日志，用来提示 HTTPS 服务已经起来，方便排障
+	log.Infow("Start to listening the incoming requests on https address", "addr", viper.GetString("tls.addr"))
+	cert, key := viper.GetString("tls.cert"), viper.GetString("tls.key")
+	if cert != "" && key != "" {
+		go func() {
+			if err := httpssrv.ListenAndServeTLS(cert, key); err != nil && !errors.Is(err, http.ErrServerClosed) {
+				log.Fatalw(err.Error())
+			}
+		}()
+	}
+
+	return httpssrv
+}
+
+// startGRPCServer 创建并运行 GRPC 服务器.
+func startGRPCServer() *grpc.Server {
+	lis, err := net.Listen("tcp", viper.GetString("grpc.addr"))
+	if err != nil {
+		log.Fatalw("Failed to listen", "err", err)
+	}
+
+	// 创建 GRPC Server 实例
+	grpcsrv := grpc.NewServer()
+	pb.RegisterMiniBlogServer(grpcsrv, user.New(store.S, nil))
+
+	// 运行 GRPC 服务器。在 goroutine 中启动服务器，它不会阻止下面的正常关闭处理流程
+	// 打印一条日志，用来提示 GRPC 服务已经起来，方便排障
+	log.Infow("Start to listening the incoming requests on grpc address", "addr", viper.GetString("grpc.addr"))
+	go func() {
+		if err := grpcsrv.Serve(lis); err != nil {
+			log.Fatalw(err.Error())
+		}
+	}()
+
+	return grpcsrv
 }

@@ -9,12 +9,14 @@ import (
 	"blog/internal/blog/biz"
 	"blog/internal/blog/store"
 	"blog/pkg/auth"
+	pb "blog/pkg/proto/blog/v1"
 )
 
 // UserController 是 user 模块在 Controller 层的实现，用来处理用户模块的请求.
 type UserController struct {
 	a *auth.Authz
 	b biz.IBiz
+	pb.UnimplementedMiniBlogServer
 }
 
 // New 创建一个 user controller.
