@@ -6,8 +6,6 @@
 package blog
 
 import (
-	"blog/internal/pkg/known"
-	"blog/internal/pkg/log"
 	"context"
 	"fmt"
 	"os"
@@ -15,9 +13,12 @@ import (
 	"syscall"
 	"time"
 
-	mw "blog/internal/pkg/middleware"
-	"blog/pkg/token"
-	"blog/pkg/version/verflag"
+	"github.com/qppHUST/blog/internal/pkg/known"
+	"github.com/qppHUST/blog/internal/pkg/log"
+	"github.com/qppHUST/blog/pkg/token"
+	"github.com/qppHUST/blog/pkg/version/verflag"
+
+	mw "github.com/qppHUST/blog/internal/pkg/middleware"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -40,11 +41,11 @@ func NewBlogCommand() *cobra.Command {
 		SilenceUsage: true,
 		// 指定调用 cmd.Execute() 时，执行的 Run 函数，函数执行失败会返回错误信息
 		RunE: func(cmd *cobra.Command, args []string) error {
-			//初始化日志
+			// 初始化日志
 			log.Init(logOptions())
-			//将缓存中的日志刷新到磁盘
+			// 将缓存中的日志刷新到磁盘
 			defer log.Sync()
-			//添加--version的处理逻辑，能够输出版本信息
+			// 添加--version的处理逻辑，能够输出版本信息
 			verflag.PrintAndExitIfRequested()
 			return run()
 		},
@@ -77,7 +78,6 @@ func NewBlogCommand() *cobra.Command {
 
 // run 函数是实际的业务代码入口函数.
 func run() error {
-
 	// 初始化 store 层
 	if err := initStore(); err != nil {
 		return err
@@ -86,7 +86,7 @@ func run() error {
 	// 设置 token 包的签发密钥，用于 token 包 token 的签发和解析
 	token.Init(viper.GetString("jwt-secret"), known.XUsernameKey)
 
-	//设置gin模式
+	// 设置gin模式
 	gin.SetMode(viper.GetString("runmode"))
 
 	// 创建 Gin 引擎

@@ -12,11 +12,12 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/qppHUST/blog/internal/pkg/log"
+
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
-	"blog/internal/pkg/log"
-	pb "blog/pkg/proto/blog/v1"
+	pb "github.com/qppHUST/blog/pkg/proto/blog/v1"
 )
 
 var (

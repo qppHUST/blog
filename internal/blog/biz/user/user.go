@@ -6,16 +6,17 @@
 package user
 
 import (
-	"blog/internal/blog/store"
-	"blog/internal/pkg/errno"
-	"blog/internal/pkg/log"
-	"blog/internal/pkg/model"
-	v1 "blog/pkg/api/blog/v1"
-	"blog/pkg/auth"
-	"blog/pkg/token"
 	"context"
 	"errors"
 	"regexp"
+
+	"github.com/qppHUST/blog/internal/blog/store"
+	"github.com/qppHUST/blog/internal/pkg/errno"
+	"github.com/qppHUST/blog/internal/pkg/log"
+	"github.com/qppHUST/blog/internal/pkg/model"
+	v1 "github.com/qppHUST/blog/pkg/api/blog/v1"
+	"github.com/qppHUST/blog/pkg/auth"
+	"github.com/qppHUST/blog/pkg/token"
 
 	"github.com/jinzhu/copier"
 	"gorm.io/gorm"

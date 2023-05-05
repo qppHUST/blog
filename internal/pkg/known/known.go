@@ -6,7 +6,7 @@
 package known
 
 const (
-	//用以保存XRequestIDKey键名
+	// 用以保存XRequestIDKey键名.
 	XRequestIDKey = "X-Request-ID"
 
 	// XUsernameKey 用来定义 Gin 上下文的键，代表请求的所有者.

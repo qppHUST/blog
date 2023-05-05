@@ -9,9 +9,9 @@ import (
 	"context"
 	"errors"
 
-	"gorm.io/gorm"
+	"github.com/qppHUST/blog/internal/pkg/model"
 
-	"blog/internal/pkg/model"
+	"gorm.io/gorm"
 )
 
 // PostStore 定义了 post 模块在 store 层所实现的方法.

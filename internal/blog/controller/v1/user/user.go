@@ -6,10 +6,10 @@
 package user
 
 import (
-	"blog/internal/blog/biz"
-	"blog/internal/blog/store"
-	"blog/pkg/auth"
-	pb "blog/pkg/proto/blog/v1"
+	"github.com/qppHUST/blog/internal/blog/biz"
+	"github.com/qppHUST/blog/internal/blog/store"
+	"github.com/qppHUST/blog/pkg/auth"
+	pb "github.com/qppHUST/blog/pkg/proto/blog/v1"
 )
 
 // UserController 是 user 模块在 Controller 层的实现，用来处理用户模块的请求.

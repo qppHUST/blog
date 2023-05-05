@@ -9,14 +9,15 @@ import (
 	"context"
 	"time"
 
+	"github.com/qppHUST/blog/internal/pkg/core"
+	"github.com/qppHUST/blog/internal/pkg/errno"
+	"github.com/qppHUST/blog/internal/pkg/log"
+
 	"github.com/gin-gonic/gin"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	"blog/internal/pkg/core"
-	"blog/internal/pkg/errno"
-	"blog/internal/pkg/log"
-	v1 "blog/pkg/api/blog/v1"
-	pb "blog/pkg/proto/blog/v1"
+	v1 "github.com/qppHUST/blog/pkg/api/blog/v1"
+	pb "github.com/qppHUST/blog/pkg/proto/blog/v1"
 )
 
 // List 返回用户列表，只有 root 用户才能获取用户列表.

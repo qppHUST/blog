@@ -8,9 +8,9 @@ package model
 import (
 	"time"
 
-	"gorm.io/gorm"
+	"github.com/qppHUST/blog/pkg/auth"
 
-	"blog/pkg/auth"
+	"gorm.io/gorm"
 )
 
 type UserM struct {
@@ -24,7 +24,7 @@ type UserM struct {
 	Username  string    `gorm:"column:username"`       //
 }
 
-// TableName sets the insert table name for this struct type
+// TableName sets the insert table name for this struct type.
 func (u *UserM) TableName() string {
 	return "user"
 }

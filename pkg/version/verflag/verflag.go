@@ -6,10 +6,11 @@
 package verflag
 
 import (
-	"blog/pkg/version"
 	"fmt"
 	"os"
 	"strconv"
+
+	"github.com/qppHUST/blog/pkg/version"
 
 	"github.com/spf13/pflag"
 )

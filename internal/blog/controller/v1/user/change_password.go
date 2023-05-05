@@ -6,10 +6,10 @@
 package user
 
 import (
-	"blog/internal/pkg/core"
-	"blog/internal/pkg/errno"
-	"blog/internal/pkg/log"
-	v1 "blog/pkg/api/blog/v1"
+	"github.com/qppHUST/blog/internal/pkg/core"
+	"github.com/qppHUST/blog/internal/pkg/errno"
+	"github.com/qppHUST/blog/internal/pkg/log"
+	v1 "github.com/qppHUST/blog/pkg/api/blog/v1"
 
 	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"

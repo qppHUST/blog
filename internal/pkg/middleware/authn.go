@@ -6,11 +6,11 @@
 package middleware
 
 import (
-	"blog/internal/pkg/core"
-	"blog/internal/pkg/errno"
-	"blog/internal/pkg/known"
-	"blog/internal/pkg/log"
-	"blog/pkg/token"
+	"github.com/qppHUST/blog/internal/pkg/core"
+	"github.com/qppHUST/blog/internal/pkg/errno"
+	"github.com/qppHUST/blog/internal/pkg/known"
+	"github.com/qppHUST/blog/internal/pkg/log"
+	"github.com/qppHUST/blog/pkg/token"
 
 	"github.com/gin-gonic/gin"
 )

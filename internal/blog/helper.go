@@ -6,10 +6,6 @@
 package blog
 
 import (
-	"blog/internal/blog/controller/v1/user"
-	"blog/internal/blog/store"
-	"blog/internal/pkg/log"
-	"blog/pkg/db"
 	"errors"
 	"fmt"
 	"net"
@@ -18,7 +14,12 @@ import (
 	"path/filepath"
 	"strings"
 
-	pb "blog/pkg/proto/blog/v1"
+	"github.com/qppHUST/blog/internal/blog/controller/v1/user"
+	"github.com/qppHUST/blog/internal/blog/store"
+	"github.com/qppHUST/blog/internal/pkg/log"
+	"github.com/qppHUST/blog/pkg/db"
+
+	pb "github.com/qppHUST/blog/pkg/proto/blog/v1"
 
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"

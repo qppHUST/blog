@@ -6,8 +6,9 @@
 package main
 
 import (
-	"blog/internal/blog"
 	"os"
+
+	"github.com/qppHUST/blog/internal/blog"
 
 	_ "go.uber.org/automaxprocs"
 )

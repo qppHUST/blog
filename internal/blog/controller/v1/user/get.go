@@ -6,8 +6,8 @@
 package user
 
 import (
-	"blog/internal/pkg/core"
-	"blog/internal/pkg/log"
+	"github.com/qppHUST/blog/internal/pkg/core"
+	"github.com/qppHUST/blog/internal/pkg/log"
 
 	"github.com/gin-gonic/gin"
 )

@@ -11,14 +11,15 @@ import (
 	"context"
 	"errors"
 
+	"github.com/qppHUST/blog/internal/blog/store"
+	"github.com/qppHUST/blog/internal/pkg/errno"
+	"github.com/qppHUST/blog/internal/pkg/log"
+	"github.com/qppHUST/blog/internal/pkg/model"
+
 	"github.com/jinzhu/copier"
 	"gorm.io/gorm"
 
-	"blog/internal/blog/store"
-	"blog/internal/pkg/errno"
-	"blog/internal/pkg/log"
-	"blog/internal/pkg/model"
-	v1 "blog/pkg/api/blog/v1"
+	v1 "github.com/qppHUST/blog/pkg/api/blog/v1"
 )
 
 // PostBiz defines functions used to handle post request.

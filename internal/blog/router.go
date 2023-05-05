@@ -6,21 +6,20 @@
 package blog
 
 import (
-	"blog/internal/blog/controller/v1/user"
-	"blog/internal/blog/store"
-	"blog/internal/pkg/core"
-	"blog/internal/pkg/errno"
-	"blog/internal/pkg/log"
-	"blog/pkg/auth"
+	"github.com/qppHUST/blog/internal/blog/controller/v1/user"
+	"github.com/qppHUST/blog/internal/blog/store"
+	"github.com/qppHUST/blog/internal/pkg/core"
+	"github.com/qppHUST/blog/internal/pkg/errno"
+	"github.com/qppHUST/blog/internal/pkg/log"
+	"github.com/qppHUST/blog/pkg/auth"
 
-	mw "blog/internal/pkg/middleware"
+	mw "github.com/qppHUST/blog/internal/pkg/middleware"
 
 	"github.com/gin-gonic/gin"
 )
 
 // installRouters 安装 miniblog 接口路由.
 func installRouters(g *gin.Engine) error {
-
 	authz, err := auth.NewAuthz(store.S.DB())
 	if err != nil {
 		return err
@@ -40,7 +39,7 @@ func installRouters(g *gin.Engine) error {
 
 	uc := user.New(store.S, authz)
 
-	//登录接口
+	// 登录接口
 	g.POST("/login", uc.Login)
 
 	// 创建 v1 路由分组
@@ -49,10 +48,10 @@ func installRouters(g *gin.Engine) error {
 		// 创建 users 路由分组
 		userv1 := v1.Group("/users")
 		{
-			userv1.POST("", uc.Create)                             //创建用户
-			userv1.PUT(":name/change-password", uc.ChangePassword) //修改密码
+			userv1.POST("", uc.Create)                             // 创建用户
+			userv1.PUT(":name/change-password", uc.ChangePassword) // 修改密码
 			userv1.Use(mw.Authn(), mw.Authz(authz))
-			userv1.GET(":name", uc.Get) //获取用户详情
+			userv1.GET(":name", uc.Get) // 获取用户详情
 			// userv1.PUT(":name",us.UPDATE)
 			// userv1.GET("",us.List)
 			// userv1.DELETE(":name",us.Delete)

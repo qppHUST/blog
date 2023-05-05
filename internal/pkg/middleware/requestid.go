@@ -6,7 +6,7 @@
 package middleware
 
 import (
-	"blog/internal/pkg/known"
+	"github.com/qppHUST/blog/internal/pkg/known"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"

@@ -6,10 +6,10 @@
 package user
 
 import (
-	"github.com/gin-gonic/gin"
+	"github.com/qppHUST/blog/internal/pkg/core"
+	"github.com/qppHUST/blog/internal/pkg/log"
 
-	"blog/internal/pkg/core"
-	"blog/internal/pkg/log"
+	"github.com/gin-gonic/gin"
 )
 
 // Delete 删除一个用户.

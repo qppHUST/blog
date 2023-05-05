@@ -6,8 +6,8 @@
 package biz
 
 import (
-	"blog/internal/blog/biz/user"
-	"blog/internal/blog/store"
+	"github.com/qppHUST/blog/internal/blog/biz/user"
+	"github.com/qppHUST/blog/internal/blog/store"
 )
 
 // IBiz 定义了 Biz 层需要实现的方法.

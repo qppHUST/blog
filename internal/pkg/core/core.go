@@ -6,8 +6,9 @@
 package core
 
 import (
-	"blog/internal/pkg/errno"
 	"net/http"
+
+	"github.com/qppHUST/blog/internal/pkg/errno"
 
 	"github.com/gin-gonic/gin"
 )

@@ -6,9 +6,10 @@
 package store
 
 import (
-	"blog/internal/pkg/model"
 	"context"
 	"errors"
+
+	"github.com/qppHUST/blog/internal/pkg/model"
 
 	"gorm.io/gorm"
 )
