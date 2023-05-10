@@ -33,7 +33,7 @@ func main() {
 		log.Fatalw("Did not connect", "err", err)
 	}
 	defer conn.Close()
-	c := pb.NewMiniBlogClient(conn)
+	c := pb.NewBlogClient(conn)
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()

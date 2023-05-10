@@ -25,89 +25,89 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	MiniBlog_ListUser_FullMethodName = "/v1.MiniBlog/ListUser"
+	Blog_ListUser_FullMethodName = "/v1.Blog/ListUser"
 )
 
-// MiniBlogClient is the client API for MiniBlog service.
+// BlogClient is the client API for Blog service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type MiniBlogClient interface {
+type BlogClient interface {
 	ListUser(ctx context.Context, in *ListUserRequest, opts ...grpc.CallOption) (*ListUserResponse, error)
 }
 
-type miniBlogClient struct {
+type blogClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewMiniBlogClient(cc grpc.ClientConnInterface) MiniBlogClient {
-	return &miniBlogClient{cc}
+func NewBlogClient(cc grpc.ClientConnInterface) BlogClient {
+	return &blogClient{cc}
 }
 
-func (c *miniBlogClient) ListUser(ctx context.Context, in *ListUserRequest, opts ...grpc.CallOption) (*ListUserResponse, error) {
+func (c *blogClient) ListUser(ctx context.Context, in *ListUserRequest, opts ...grpc.CallOption) (*ListUserResponse, error) {
 	out := new(ListUserResponse)
-	err := c.cc.Invoke(ctx, MiniBlog_ListUser_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, Blog_ListUser_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// MiniBlogServer is the server API for MiniBlog service.
-// All implementations must embed UnimplementedMiniBlogServer
+// BlogServer is the server API for Blog service.
+// All implementations must embed UnimplementedBlogServer
 // for forward compatibility
-type MiniBlogServer interface {
+type BlogServer interface {
 	ListUser(context.Context, *ListUserRequest) (*ListUserResponse, error)
-	mustEmbedUnimplementedMiniBlogServer()
+	mustEmbedUnimplementedBlogServer()
 }
 
-// UnimplementedMiniBlogServer must be embedded to have forward compatible implementations.
-type UnimplementedMiniBlogServer struct {
+// UnimplementedBlogServer must be embedded to have forward compatible implementations.
+type UnimplementedBlogServer struct {
 }
 
-func (UnimplementedMiniBlogServer) ListUser(context.Context, *ListUserRequest) (*ListUserResponse, error) {
+func (UnimplementedBlogServer) ListUser(context.Context, *ListUserRequest) (*ListUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListUser not implemented")
 }
-func (UnimplementedMiniBlogServer) mustEmbedUnimplementedMiniBlogServer() {}
+func (UnimplementedBlogServer) mustEmbedUnimplementedBlogServer() {}
 
-// UnsafeMiniBlogServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to MiniBlogServer will
+// UnsafeBlogServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to BlogServer will
 // result in compilation errors.
-type UnsafeMiniBlogServer interface {
-	mustEmbedUnimplementedMiniBlogServer()
+type UnsafeBlogServer interface {
+	mustEmbedUnimplementedBlogServer()
 }
 
-func RegisterMiniBlogServer(s grpc.ServiceRegistrar, srv MiniBlogServer) {
-	s.RegisterService(&MiniBlog_ServiceDesc, srv)
+func RegisterBlogServer(s grpc.ServiceRegistrar, srv BlogServer) {
+	s.RegisterService(&Blog_ServiceDesc, srv)
 }
 
-func _MiniBlog_ListUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Blog_ListUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListUserRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MiniBlogServer).ListUser(ctx, in)
+		return srv.(BlogServer).ListUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: MiniBlog_ListUser_FullMethodName,
+		FullMethod: Blog_ListUser_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MiniBlogServer).ListUser(ctx, req.(*ListUserRequest))
+		return srv.(BlogServer).ListUser(ctx, req.(*ListUserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// MiniBlog_ServiceDesc is the grpc.ServiceDesc for MiniBlog service.
+// Blog_ServiceDesc is the grpc.ServiceDesc for Blog service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var MiniBlog_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "v1.MiniBlog",
-	HandlerType: (*MiniBlogServer)(nil),
+var Blog_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "v1.Blog",
+	HandlerType: (*BlogServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "ListUser",
-			Handler:    _MiniBlog_ListUser_Handler,
+			Handler:    _Blog_ListUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

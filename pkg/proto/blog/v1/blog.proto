@@ -9,10 +9,10 @@ package v1;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/qppHUST/blog/pkg/proto/miniblog/v1";
+option go_package = "github.com/qppHUST/blog/pkg/proto/blog/v1";
 
-// MiniBlog 定义了一个 MiniBlog RPC 服务.
-service MiniBlog {
+// Blog 定义了一个 Blog RPC 服务.
+service Blog {
   rpc ListUser(ListUserRequest) returns (ListUserResponse) {}
 }
 

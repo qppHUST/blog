@@ -16,7 +16,7 @@ import (
 type UserController struct {
 	a *auth.Authz
 	b biz.IBiz
-	pb.UnimplementedMiniBlogServer
+	pb.UnimplementedBlogServer
 }
 
 // New 创建一个 user controller.

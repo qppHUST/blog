@@ -163,7 +163,8 @@ func startGRPCServer() *grpc.Server {
 
 	// 创建 GRPC Server 实例
 	grpcsrv := grpc.NewServer()
-	pb.RegisterMiniBlogServer(grpcsrv, user.New(store.S, nil))
+	// blogserver是一个接口，有listuser方法，而userController实现了listuser方法，是一个blogserver，在这里产生了联系
+	pb.RegisterBlogServer(grpcsrv, user.New(store.S, nil))
 
 	// 运行 GRPC 服务器。在 goroutine 中启动服务器，它不会阻止下面的正常关闭处理流程
 	// 打印一条日志，用来提示 GRPC 服务已经起来，方便排障
