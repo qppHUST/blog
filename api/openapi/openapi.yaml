@@ -9,12 +9,12 @@ servers:
     description: development server
 info:
   version: "1.0.0"
-  title: miniblog api definition
-  description: The API for the miniblog project
+  title: blog api definition
+  description: The API for the blog project
   contact:
-    name: Innkeeper Belm(孔令飞)
-    email: nosbelm@qq.com
-    url: https://github.com/colin404
+    name: qppHUST(邱攀攀)
+    email: 1587299799@qq.com
+    url: https://github.com/qppHUST
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT

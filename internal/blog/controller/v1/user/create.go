@@ -40,6 +40,7 @@ func (ctrl *UserController) Create(c *gin.Context) {
 		return
 	}
 
+	//对用户添加casbin授权模型
 	if _, err := ctrl.a.AddNamedPolicy("p", r.Username, "/v1/users/"+r.Username, defaultMethods); err != nil {
 		core.WriteResponse(c, err, nil)
 

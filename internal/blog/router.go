@@ -6,6 +6,7 @@
 package blog
 
 import (
+	"github.com/qppHUST/blog/internal/blog/controller/v1/post"
 	"github.com/qppHUST/blog/internal/blog/controller/v1/user"
 	"github.com/qppHUST/blog/internal/blog/store"
 	"github.com/qppHUST/blog/internal/pkg/core"
@@ -38,6 +39,7 @@ func installRouters(g *gin.Engine) error {
 	})
 
 	uc := user.New(store.S, authz)
+	pc := post.New(store.S)
 
 	// 登录接口
 	g.POST("/login", uc.Login)
@@ -49,12 +51,23 @@ func installRouters(g *gin.Engine) error {
 		userv1 := v1.Group("/users")
 		{
 			userv1.POST("", uc.Create)                             // 创建用户
-			userv1.PUT(":name/change-password", uc.ChangePassword) // 修改密码
+			userv1.PUT(":name/change-password", uc.ChangePassword) // 修改用户密码
 			userv1.Use(mw.Authn(), mw.Authz(authz))
-			userv1.GET(":name", uc.Get) // 获取用户详情
-			// userv1.PUT(":name",us.UPDATE)
-			// userv1.GET("",us.List)
-			// userv1.DELETE(":name",us.Delete)
+			userv1.GET(":name", uc.Get)       // 获取用户详情
+			userv1.PUT(":name", uc.Update)    // 更新用户
+			userv1.GET("", uc.List)           // 列出用户列表，只有 root 用户才能访问
+			userv1.DELETE(":name", uc.Delete) // 删除用户
+		}
+
+		// 创建 posts 路由分组
+		postv1 := v1.Group("/posts", mw.Authn())
+		{
+			postv1.POST("", pc.Create)             // 创建博客
+			postv1.GET(":postID", pc.Get)          // 获取博客详情
+			postv1.PUT(":postID", pc.Update)       // 更新用户
+			postv1.DELETE("", pc.DeleteCollection) // 批量删除博客
+			postv1.GET("", pc.List)                // 获取博客列表
+			postv1.DELETE(":postID", pc.Delete)    // 删除博客
 		}
 	}
 

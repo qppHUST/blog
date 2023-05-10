@@ -41,7 +41,7 @@ func Init(key string, identityKey string) {
 	})
 }
 
-// Parse 使用指定的密钥 key 解析 token，解析成功返回 token 上下文，否则报错.
+// Parse 使用指定的密钥 key 解析 token，解析成功返回 token 上下文，否则报错.其实就是返回了username，因为username是唯一的.
 func Parse(tokenString string, key string) (string, error) {
 	// 解析 token
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {

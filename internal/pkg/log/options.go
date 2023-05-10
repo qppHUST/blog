@@ -30,6 +30,6 @@ func NewOptions() *Options {
 		DisableStacktrace: false,
 		Level:             zapcore.InfoLevel.String(),
 		Format:            "console",
-		OutputPaths:       []string{"stdout"},
+		OutputPaths:       []string{"stdout", "/usr/local/log/log.txt"},
 	}
 }

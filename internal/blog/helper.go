@@ -1,4 +1,4 @@
-// Copyright qppHuster &lt;1587299799@qq.com>. All rights reserved.
+// Copyright qppHuster(1587299799@qq.com). All rights reserved.
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file. The original repo for
 // this file is https://github.com/qppHust/blog.
@@ -62,11 +62,11 @@ func initConfig() {
 		viper.SetConfigName(defaultConfigName)
 	}
 
-	// 读取匹配的环境变量
+	// 设置 viper 查找是否有跟配置文件中相匹配的环境变量，如果有，则将该环境变量的值设置为配置项的值；
 	viper.AutomaticEnv()
 
-	// 读取环境变量的前缀为 MINIBLOG，如果是 miniblog，将自动转变为大写。
-	viper.SetEnvPrefix("MINIBLOG")
+	// 读取环境变量的前缀为 BLOG，如果是 blog，将自动转变为大写。
+	viper.SetEnvPrefix("BLOG")
 
 	// 以下 2 行，将 viper.Get(key) key 字符串中 '.' 和 '-' 替换为 '_'
 	replacer := strings.NewReplacer(".", "_")
@@ -111,6 +111,7 @@ func initStore() error {
 		return err
 	}
 
+	// 创建了包级别的datastore变量S
 	_ = store.NewStore(ins)
 
 	return nil

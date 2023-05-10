@@ -32,11 +32,11 @@ var cfgFile string
 func NewBlogCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		// 指定命令的名字，该名字会出现在帮助信息中
-		Use: "miniblog",
+		Use: "blog",
 		// 命令的简短描述
-		Short: "A good Go practical project",
+		Short: "A simple golang blog backend project",
 		// 命令的详细描述
-		Long: `A good Go practical project, used to create user with basic information.Find more miniblog information at:https://github.com/marmotedu/miniblog#readme`,
+		Long: `A simple golang blog backend project,Find more miniblog information at:https://github.com/qppHUST/blog#readme`,
 		// 命令出错时，不打印帮助信息。不需要打印帮助信息，设置为 true 可以保持命令出错时一眼就能看到错误信息
 		SilenceUsage: true,
 		// 指定调用 cmd.Execute() 时，执行的 Run 函数，函数执行失败会返回错误信息
@@ -45,7 +45,7 @@ func NewBlogCommand() *cobra.Command {
 			log.Init(logOptions())
 			// 将缓存中的日志刷新到磁盘
 			defer log.Sync()
-			// 添加--version的处理逻辑，能够输出版本信息
+			// 添加--version的处理逻辑，能够输出版本信息，在这里拦截了version,因为我们要输出东西，不需要拦截-c和-toggle，毕竟在这两个命令上我们只是简单的读取到值是什么，并用这个值
 			verflag.PrintAndExitIfRequested()
 			return run()
 		},
@@ -60,17 +60,18 @@ func NewBlogCommand() *cobra.Command {
 		},
 	}
 
-	// 以下设置，使得 initConfig 函数在每个命令运行时都会被调用以读取配置
+	// 以下设置，使得 initConfig 函数在每个命令运行时都会被调用以读取配置，这里是异步的，在oninitialize的时候才会触发
 	cobra.OnInitialize(initConfig)
 
-	// 在这里您将定义标志和配置设置。
+	// 在这里您将定义标志和配置设置。绑定了三个命令，但是，我们只是拦截了version，强调来version的时候，我们向命令行输出一些东西(runE函数里面)
 
 	// Cobra 支持持久性标志(PersistentFlag)，该标志可用于它所分配的命令以及该命令下的每个子命令
-	cmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "", "The path to the miniblog configuration file. Empty string for no configuration file.")
+	cmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "", "The path to the blog configuration file. Empty string for no configuration file.")
 
 	// Cobra 也支持本地标志，本地标志只能在其所绑定的命令上使用
 	cmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 
+	// 将标志绑定到cobra，cobra才可以识别得到version参数，这三条，本质都是注册命令
 	verflag.AddFlags(cmd.PersistentFlags())
 
 	return cmd
@@ -124,6 +125,7 @@ func run() error {
 	defer cancel()
 
 	// 10 秒内优雅关闭服务（将未处理完的请求处理完再关闭服务），超过 10 秒就超时退出
+	// Shutdown 方法工作流程为：首先关闭所有开启的监听器，然后关闭所有闲置连接，最后等待活跃的连接均闲置了才终止服务。
 	if err := httpsrv.Shutdown(ctx); err != nil {
 		log.Errorw("Insecure Server forced to shutdown", "err", err)
 		return err

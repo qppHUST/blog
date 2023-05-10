@@ -17,7 +17,7 @@ import (
 
 func Authn() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		// 解析 JWT Token
+		// 解析 JWT Token，能解析成功，就意味着认证成功，就意味着成功了
 		username, err := token.ParseRequest(c)
 		log.Infow("auth filter", "username", username)
 		if err != nil {
@@ -27,6 +27,7 @@ func Authn() gin.HandlerFunc {
 			return
 		}
 
+		// 这是为了授权才存储的，在authz里面
 		c.Set(known.XUsernameKey, username)
 		c.Next()
 	}
