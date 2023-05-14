@@ -6,6 +6,8 @@
 package blog
 
 import (
+	"github.com/gin-contrib/pprof"
+
 	"github.com/qppHUST/blog/internal/blog/controller/v1/post"
 	"github.com/qppHUST/blog/internal/blog/controller/v1/user"
 	"github.com/qppHUST/blog/internal/blog/store"
@@ -21,6 +23,9 @@ import (
 
 // installRouters 安装 miniblog 接口路由.
 func installRouters(g *gin.Engine) error {
+	//注册pprof路由
+	pprof.Register(g)
+
 	authz, err := auth.NewAuthz(store.S.DB())
 	if err != nil {
 		return err

@@ -2,9 +2,9 @@
 .DEFAULT_GOAL := all
 
 # ==============================================================================
-# 定义 Makefile all 伪目标，执行 `make` 时，会默认会执行 all 伪目标
+# 定义 Makefile all 伪目标，执行 `make` 时，会默认会执行 all 伪目标   删除了go.cover
 .PHONY: all
-all: gen.add-copyright go.format go.lint go.cover go.build
+all: gen.add-copyright go.format go.lint go.build
 
 # ==============================================================================
 # Includes
